@@ -12,13 +12,13 @@ info.prototype.password="";
  * @param {function(cb){}} cb 
  */
 module.exports=function(db,data,cb){
-    if(data.password){
-        data.pass_saft=bcrypt.genSaltSync(Math.random()*8+1);
-        data.hash_password=bcrypt.hashSync(data.password,data.pass_saft);
-        delete data.password;
-    }
     return sync.exec(function(cb){
-       qr(db,modelName).insert(data).commit(cb);
+       var ret=qr(db,modelName).match("username=={0}",data.username).project({
+           hash_password:1,
+           password_saft:1
+       }).item();
+       var p=bcrypt.hashSync(data.password,ret.password_saft);
+       return p===ret.hash_password;
     },cb);
    
 }

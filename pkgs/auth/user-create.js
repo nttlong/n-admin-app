@@ -6,7 +6,7 @@ var modelName=require("./model.users");
  * 
  * @param {*} db 
  * @param {{username:string,password:string,email:string,created_by?:string}} data 
- * @param {function(cb){}} cb 
+ * @param {Function} cb 
  */
 module.exports=function(db,data,cb){
     if(data.password){
