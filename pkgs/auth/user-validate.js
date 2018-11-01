@@ -12,13 +12,14 @@ info.prototype.password="";
  * @param {function(cb){}} cb 
  */
 module.exports=function(db,data,cb){
-    return sync.exec(function(cb){
+    return sync(function(cb){
        var ret=qr(db,modelName).match("username=={0}",data.username).project({
            hash_password:1,
-           password_saft:1
+           pass_saft:1
        }).item();
-       var p=bcrypt.hashSync(data.password,ret.password_saft);
-       return p===ret.hash_password;
-    },cb);
+       if(ret==null) return false;
+        var p = bcrypt.hashSync(data.password, ret.pass_saft);
+        cb(null,p===ret.hash_password);
+    }).call(cb);
    
 }

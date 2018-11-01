@@ -17,8 +17,8 @@ module.exports=function(db,data,cb){
     if(!data.created_by){
         data.created_by="application"
     }
-    return sync.exec(function(cb){
+    return sync(function(cb){
        qr(db,modelName).insert(data).commit(cb);
-    },cb);
+    }).call(cb);
    
 }
