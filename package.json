@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/nttlong/n-admin-app#readme",
   "dependencies": {
+    "bcrypt": "^3.0.2",
+    "n-qr": "git+https://github.com/nttlong/mqr.git",
+    "q-sync": "git+https://github.com/nttlong/q-sync.git",
     "quicky": "git+https://github.com/nttlong/njs-q.git"
   }
 }
