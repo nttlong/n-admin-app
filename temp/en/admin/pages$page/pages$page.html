@@ -1,1 +1,7 @@
+<script>
+    (function(scope){
+        scope.ws=ajax().create("{(getCurrentUrl())}");
+        console.log(scope);
+    });
+</script>
 {(loadHtml(htmlPagePath)|safe)}
