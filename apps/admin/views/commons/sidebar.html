@@ -12,7 +12,7 @@
           </a>
           <ul class="treeview-menu">
               {%for x in item.items%}
-              <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+              <li class="active"><a href="#page={(x.page)}"><i class="fa fa-circle-o"></i> {(x.caption)}</a></li>
             {%endfor%}
           </ul>
         </li>

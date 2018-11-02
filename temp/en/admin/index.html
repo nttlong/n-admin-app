@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
   
   <meta charset="utf-8">
@@ -7,7 +7,7 @@
   <title>Admin</title>
   {%include "./commons/header.html"%}
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="app">
 <div class="wrapper">
 
   <header class="main-header">
@@ -26,13 +26,24 @@
    {% include "./commons/sidebar.html" %}
 
  
-  <div class="content-wrapper">
-    </div>
+  <div class="content-wrapper" ng-if="$root.page" q-template url="{(getAppUrl())}/{{$root.page}}">
+    {{$root.page}}
+  </div>
  
  
  
   <div class="control-sidebar-bg"></div>
 </div>
-
+<script>
+  var mdl=angular.module("app",["q-ui"]);
+  mdl.controller("app",["$scope",function(scope){
+    history_navigator(scope.$root);
+    scope.$root.$history.change(function(data){
+       scope.$root.page=data.page;
+       scope.$root.$applyAsync()
+    });
+     
+  }]);
+</script>
 </body>
 </html>
