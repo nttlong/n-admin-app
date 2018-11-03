@@ -1,3 +1,10 @@
 module.exports=(context,req,res)=>{
-    debugger;
+    return {
+        ajax:{
+            load:(sender)=>{
+                debugger;
+
+            }
+        }
+    }
 }

@@ -11,22 +11,18 @@
 <div class="wrapper">
 
   <header class="main-header">
-    <!-- Logo -->
-    
-    <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-
+    {% include "./commons/right_navbar.html" %}
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
    {% include "./commons/sidebar.html" %}
 
  
-  <div class="content-wrapper" ng-if="$root.page" q-template url="{(getAppUrl())}/{{$root.page}}">
+  <div class="content-wrapper"  q-template url="{(getAppUrl())}/{{$root.page}}">
   
   </div>
  
@@ -39,11 +35,17 @@
   mdl.controller("app",["$scope",function(scope){
     history_navigator(scope.$root);
     scope.$root.$history.change(function(data){
-       scope.$root.page=data.page;
+      if(data.page){
+        scope.$root.page=data.page;
+      }
+      else {
+        scope.$root.page="{(getAppUrl())}/pages/home";
+      }
+       
        scope.$root.$applyAsync()
     });
      
   }]);
 </script>
 </body>
-</html>
+</html>

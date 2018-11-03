@@ -1,5 +1,6 @@
 var q = require("quicky");
-var cnn = "mongodb://root:123456@localhost:27017/hrm";
+var cnn = "mongodb://localhost:27017/test1";
+q.setConnect(cnn);
 q.language.setConfig(cnn,"sys_language");
 var app = q.apps;
 app.setSecretKey("sas03udh74327%$63283");
