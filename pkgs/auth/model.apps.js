@@ -23,10 +23,14 @@ dbUtil.model(modelName,[
                 description:dbUtil.FieldTypes.String,
                 created_on: dbUtil.FieldTypes.Date,
                 created_by: dbUtil.FieldTypes.String,
+                modified_on: dbUtil.FieldTypes.Date,
+                modified_by: dbUtil.FieldTypes.String
             }
         ),
         created_on:dbUtil.FieldTypes.Date,
         created_by:dbUtil.FieldTypes.String,
+        modified_on: dbUtil.FieldTypes.Date,
+        modified_by: dbUtil.FieldTypes.String
 
 });
 module.exports=modelName;

@@ -1,5 +1,6 @@
 require("./model.users");
 require("./model.apps");
+require("./model.roles");
 module.exports = {
     users: {
         create: require("./user-create"),
