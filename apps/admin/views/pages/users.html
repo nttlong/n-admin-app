@@ -1,15 +1,15 @@
 <script src="../../controllers/users.js" server></script>
-<script server>
-    (function(context,req,res){
-        debugger;
-    });
-</script>
 <div>
-
+{{data}}
 </div>
 <script>
     (function(scope){
-    
-        alert(scope.$id);
+        scope.getItems=function(){
+            scope.ws.call("getItems").done(function(res){
+                scope.data=res;
+                scope.$applyAsync();
+            })
+        }
+        scope.getItems();
     })
 </script>

@@ -1,0 +1,15 @@
+<script src="./../../controllers/roles.js" server></script>
+<div>
+    {{data}}
+</div>
+<script>
+(function(scope){
+    scope.getItems=function(){
+        scope.ws.call("getItems").done(function(res){
+            scope.data=res;
+            scope.$applyAsync(); 
+        });
+    }
+    scope.getItems();
+});
+</script>
