@@ -1,5 +1,6 @@
 
 <script src="./../../controllers/profile.js" server></script>
+
 <div class="box box-info">
     <div class="box-header with-border">
         <h3 class="box-title">res::(User profile)</h3>
@@ -8,40 +9,50 @@
     <form class="form-horizontal">
         <div class="box-body">
             <div class="form-group">
+                <label class="col-sm-2 control-label">res::(Username)</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="res::(Username)" readonly="readonly" ng-model="data.username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">res::(First name)</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="data.first_name" placeholder="res::(First name)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">res::(Last name)</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="data.last_name" placeholder="res::(Last name)">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">res::(Email)</label>
 
                 <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    <input type="email" class="form-control" ng-model="data.email" placeholder="res::(Email)">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Remember me
-                        </label>
-                    </div>
-                </div>
-            </div>
         </div>
-        <!-- /.box-body -->
+     
         <div class="box-footer">
-            <button type="submit" class="btn btn-default">Cancel</button>
-            <button type="submit" class="btn btn-info pull-right">Sign in</button>
+            
+            <button type="button" class="btn btn-info pull-right" ng-click="doSave()">res::(Save)</button>
         </div>
-        <!-- /.box-footer -->
+       
     </form>
 </div>
 <script>
-(function(scope){
-    debugger;
+    (function (scope) {
+        scope.doSave = function () {
+            scope.ws.call("save").data(scope.data).done(function (res) {
+
+            });
+        }
     scope.ws.call("get").done(function(res){
         scope.data=res;
         scope.$applyAsync();

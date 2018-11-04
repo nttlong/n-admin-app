@@ -4,9 +4,7 @@
     "\\apps",
     "\\apps\\admin",
     "\\apps\\admin\\views",
-    "\\apps\\admin\\views\\pages",
-    "\\node_modules\\quicky"
+    "\\apps\\admin\\views\\pages"
   ],
-  "SelectedNode": "\\apps\\admin\\views\\pages\\profile.html",
   "PreviewInSolutionExplorer": false
 }

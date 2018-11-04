@@ -1,5 +1,5 @@
 require("./model.users");
-
+require("./model.apps");
 module.exports = {
     users: {
         create: require("./user-create"),
@@ -7,5 +7,8 @@ module.exports = {
         signIn:require("./user-signin"),
         get: require("./user-get")
 
+    },
+    apps:{
+        registerView:require("./apps-register-view")
     }
 }
