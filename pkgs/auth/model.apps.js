@@ -8,8 +8,7 @@ dbUtil.model(modelName,[
 ],[
     "code",
     "created_on",
-    "created_by",
-    "views"
+    "created_by"
     
 ],{
         code:dbUtil.FieldTypes.String,
@@ -23,11 +22,11 @@ dbUtil.model(modelName,[
                 name:dbUtil.FieldTypes.String,
                 description:dbUtil.FieldTypes.String,
                 created_on: dbUtil.FieldTypes.Date,
-                created_by: dbUtil.FieldTypes.Date,
+                created_by: dbUtil.FieldTypes.String,
             }
         ),
         created_on:dbUtil.FieldTypes.Date,
-        created_by:dbUtil.FieldTypes.Date,
+        created_by:dbUtil.FieldTypes.String,
 
 });
 module.exports=modelName;
