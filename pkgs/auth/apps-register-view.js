@@ -46,10 +46,25 @@ function registeView(db,data,cb){
             .project({
                 indexOfView:"indexOfArray(views.code,{0})"
             },data.view.code).item();
-            var setter={};
-            setter["views." + item.indexOfView]=data.view;
-            var ret=query(db,modelApps).where("code=={0}",data.code)
-                .set(setter).commit();
+            if(item.indexOfView>-1){
+                var setter = {};
+                setter["views." + item.indexOfView] = data.view;
+                var ret = query(db, modelApps).where("code=={0}", data.code)
+                    .set(setter).commit();
+            }
+            else {
+                var ret = query(db, modelApps).where("code=={0}", data.code)
+                    .push({
+                        views:{
+                            code:data.view.code,
+                            name:data.view.name,
+                            created_by:"application",
+                            created_on:new Date()
+                            
+                        }
+                    }).commit();
+            }
+           
             cb(null,ret);
 
         }
