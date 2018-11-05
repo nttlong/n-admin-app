@@ -1,0 +1,21 @@
+<script src="./../../controllers/site-info" server></script>
+<div>
+{{data}}
+</div>
+<script>
+(function(scope){
+    scope.load=function(){
+        scope.ws.call("get").done(function(res){
+            scope.data=res;
+            scope.$applyAsync();
+        })
+    }
+    scope.load();
+    scope.save=function(){
+        scope.ws.call("save").data(scope.data).done(function(res){
+            
+            scope.$applyAsync();
+        })
+    }
+})
+</script>
