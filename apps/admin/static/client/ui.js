@@ -416,28 +416,34 @@ mdl.directive("qTemplate", ["$compile", function ($compile) {
     function compile(scope, scripts, content,url) {
         
         var subScope = scope.$new(true, scope);
-        if (scripts && (scripts.length > 0)) {
-            for (var i = 0; i < scripts.length; i++) {
-                try {
-                    //debugger;
-                    var fn = Function("var ret=" + scripts[i] + ";return ret")();
-                    fn(subScope);
-                }
-                catch (ex) {
-                    throw ({
-                        error: ex,
-                        url: url
-                    })
-                    console.log(scripts[i])
-                }
-            }
-        }
+        
         var $ele = $("<div>" + content + "</div>");
         subScope.$element = $ele.children();
         $compile($ele.contents())(subScope);
         subScope.$applyAsync();
 
-        return subScope;
+        return {
+            scope:subScope,
+            run:function(){
+                if (scripts && (scripts.length > 0)) {
+                    for (var i = 0; i < scripts.length; i++) {
+                        try {
+                            //debugger;
+                            var fn = Function("var ret=" + scripts[i] + ";return ret")();
+                            fn(subScope);
+                        }
+                        catch (ex) {
+                            throw ({
+                                error: ex,
+                                url: url
+                            })
+                            console.log(scripts[i])
+                        }
+                    }
+                }
+            }
+
+        } 
     }
     return {
         restrict: "ACE",
@@ -445,14 +451,21 @@ mdl.directive("qTemplate", ["$compile", function ($compile) {
             attr.$observe("url", function (value) {
                 loadUrl(value, function (err, content) {
                     var ret = getScript(content);
-                    var sScope = compile(scope, ret.scripts, ret.content,ret.url);
+                    var retObj = compile(scope, ret.scripts, ret.content,ret.url);
                     ele.empty();
-                    sScope.$element.appendTo(ele[0]);
+                    retObj.scope.$element.appendTo(ele[0]);
                     function watch() {
-                        if (!$.contains($("body")[0], sScope.$element[0])) {
-                            sScope.$destroy();
+                        if (!$.contains($("body")[0], retObj.scope.$element[0])) {
+                            retObj.scope.$destroy();
                         }
                         else {
+                            if(retObj.run){
+                                setTimeout(function(){
+               retObj.run();
+                                    retObj.run=undefined;
+                                },50);
+                                
+                            }
                             setTimeout(watch, 500);
                         }
                     }
@@ -763,13 +776,15 @@ mdl.directive("ajax",["$ajax","$parse",function($ajax,$parse){
 mdl.directive("call",["$parse",function($parse){
     return {
         restrict:"ECA",
-        priority:50000,
+        priority:2,
         scope:false,
         link:function(s,e,a){
+            
             s.$watch(e.parent().attr("ws")||"$ws",function(o,v){
+                var scope=findScopeById(e.parent().attr("s-id")*1);
                 var ws=undefined;
                 function exec(){
-                    var scope=findScopeById(e.parent().attr("s-id")*1);
+                    
                         var data=scope.$eval(a.params);
                         ws.call(a.id,data,function(e,r){
                             if(e){
@@ -795,7 +810,7 @@ mdl.directive("call",["$parse",function($parse){
 
                     }
                     else {
-                        $parse(a.function).assign(exec);
+                        $parse(a.function).assign(scope,exec);
                     }
                 }
             })

@@ -5,7 +5,6 @@ module.exports=(context,req,res)=>{
     return {
         ajax:{
             getItems:(data)=>{
-                debugger;
                 var ret=query(db,userModelName).project({
                     username:1,
                     first_name:1,

@@ -1,30 +1,35 @@
 <script src="../../controllers/users.js" server></script>
 <div>
-    {{$id}}
+    <input type="text" ng-model="test" ng-change="getItems()">
+    <button ng-click="getItems()"></button>
 {{data}}
 <ajax url="{(getCurrentUrl())}" ws="myAjax">
-    <call data-id="getItems" data-params="{{getUser}}" ng-model="data"></call>
+    <call data-id="getItems" data-params="{{test}}" ng-model="data" data-function="getItems" data-callback="doTest"></call>
 </ajax>
 </div>
 <script>
     (function(scope){
-        console.log(scope);
-        scope.getUser={
-            name:1
+        scope.doTest=function(){
+            alert("OK");
         }
-        scope.getItems=function(){
+        scope.getItems();
+
+        // scope.getUser={
+        //     name:1
+        // }
+        // scope.getItems=function(){
             
-            scope.ws.callAll({id:"getItems",done:function(res){
-                scope.data=res;
-                scope.$applyAsync();
-            }},{
-                id:"getItems",
-                done:function(res){
-                    scope.data=res;
-                    scope.$applyAsync();
-                }
-            });
-        }
+        //     scope.ws.callAll({id:"getItems",done:function(res){
+        //         scope.data=res;
+        //         scope.$applyAsync();
+        //     }},{
+        //         id:"getItems",
+        //         done:function(res){
+        //             scope.data=res;
+        //             scope.$applyAsync();
+        //         }
+        //     });
+        // }
         //scope.getItems();
     })
 </script>
