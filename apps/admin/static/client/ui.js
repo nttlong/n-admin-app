@@ -475,8 +475,8 @@ mdl.directive("qTemplate", ["$compile", function ($compile) {
         }
     }
 }]);
-angular.module('imageupload', [])
-    .directive('image', function($q) {
+//angular.module('imageupload', [])
+mdl.directive('image', function($q) {
         'use strict'
 
         var URL = window.URL || window.webkitURL;
@@ -559,6 +559,7 @@ angular.module('imageupload', [])
                 resizeQuality: '@?',
                 resizeType: '@?',
             },
+            template:"<input type='file'/>",
             link: function postLink(scope, element, attrs, ctrl) {
 
                 var doResizing = function(imageResult, callback) {
