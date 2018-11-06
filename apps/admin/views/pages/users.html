@@ -1,14 +1,37 @@
 <script src="../../controllers/users.js" server></script>
 <div>
-    <input type="text" ng-model="test" ng-change="getItems()">
-    <button ng-click="getItems()"></button>
-{{data}}
+    <style>
+        .form-element{
+            margin-top:4px;
+        }
+    </style>
+    <div form-data source="X" data-md-cols="2,10" data-sm-cols="2,10" data-lg-cols="1,11" data-xs="2,10" class="container">
+       
+        <div form-template>
+            <label>
+                Name
+            </label>
+            <input type="text" ng-model="_.name" class="form-control">
+            <label>
+                    Name
+                </label>
+                <input type="text" ng-model="_.name" class="form-control">
+                <label>
+                        Name
+                    </label>
+                    <input type="text" ng-model="_.name" class="form-control">
+        </div>
+    </div>
+    {{X}}
 <ajax url="{(getCurrentUrl())}" ws="myAjax">
-    <call data-id="getItems" data-params="{{test}}" ng-model="data" data-function="getItems" data-callback="doTest"></call>
+    <call data-id="getItems" ng-model="data" data-function="getItems"></call>
 </ajax>
 </div>
 <script>
     (function(scope){
+        scope.X={
+            name:"122313"
+        }
         scope.doTest=function(){
             alert("OK");
         }

@@ -2,49 +2,47 @@
 <script src="./../../controllers/profile.js" server></script>
 
 <div class="box box-info">
+        <style>
+                .form-element{
+                    margin-top:4px;
+                }
+            </style>
     <div class="box-header with-border">
         <h3 class="box-title">res::(User profile)</h3>
     </div>
-  
-    <form class="form-horizontal">
-        <div class="box-body">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">res::(Username)</label>
-
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="res::(Username)" readonly="readonly" ng-model="data.username">
-                </div>
+   <div form-data data-source="data" md-cols="2,10" xs-cols="4,8" lg-cols="1,3,1,3,1,3" sm-cols="3,9" style="padding:10px" >
+       <form-template>
+           <div class="row">
+                <label class="control-label">res::(Username)</label>
+                <input type="text" class="form-control" placeholder="res::(Username)" readonly="readonly" ng-model="_.username">
+                <label class="control-label">res::(First name)</label>
+                <input type="text" class="form-control" ng-model="_.first_name" placeholder="res::(First name)">
+                <label class="control-label">res::(Last name)</label>
+                <input type="text" class="form-control" ng-model="_.last_name" placeholder="res::(Last name)">
+                <label class="control-label">res::(Email)</label>
+                <input type="email" class="form-control" ng-model="_.email" placeholder="res::(Email)" lg-span="5">
+           </div>
+           <div class="row">
+                <label class="control-label">res::(Username)</label>
+                <input type="text" class="form-control" placeholder="res::(Username)" readonly="readonly" ng-model="_.username">
+           </div>
+            <div class="row">
+                    
+                    <label class="control-label">res::(Description)</label>
+                    <textarea  class="form-control" lg-span="11"></textarea>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">res::(First name)</label>
-
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" ng-model="data.first_name" placeholder="res::(First name)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">res::(Last name)</label>
-
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" ng-model="data.last_name" placeholder="res::(Last name)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">res::(Email)</label>
-
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" ng-model="data.email" placeholder="res::(Email)">
-                </div>
-            </div>
-
-        </div>
-     
-        <div class="box-footer">
             
-            <button type="button" class="btn btn-info pull-right" ng-click="doSave()">res::(Save)</button>
-        </div>
+            
+           
+
+       </form-template>
        
-    </form>
+   </div>
+   <div class="box-footer">
+            
+        <button type="button" class="btn btn-info pull-right" ng-click="doSave()">res::(Save)</button>
+    </div>
+    
 </div>
 <script>
     (function (scope) {
@@ -53,7 +51,7 @@
 
             });
         }
-    scope.ws.call("get").done(function(res){
+    scope.ws.call("get",function(error,res){
         scope.data=res;
         scope.$applyAsync();
         console.log(res);
