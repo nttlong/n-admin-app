@@ -1,15 +1,30 @@
 <script src="../../controllers/users.js" server></script>
 <div>
+    {{$id}}
 {{data}}
+<ajax url="{(getCurrentUrl())}" ws="myAjax">
+    <call data-id="getItems" data-params="{{getUser}}" ng-model="data"></call>
+</ajax>
 </div>
 <script>
     (function(scope){
+        console.log(scope);
+        scope.getUser={
+            name:1
+        }
         scope.getItems=function(){
-            scope.ws.call("getItems").done(function(res){
+            
+            scope.ws.callAll({id:"getItems",done:function(res){
                 scope.data=res;
                 scope.$applyAsync();
-            })
+            }},{
+                id:"getItems",
+                done:function(res){
+                    scope.data=res;
+                    scope.$applyAsync();
+                }
+            });
         }
-        scope.getItems();
+        //scope.getItems();
     })
 </script>

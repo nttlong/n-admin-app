@@ -32,8 +32,11 @@
 </div>
 <script>
   var mdl=angular.module("app",["q-ui"]);
-  mdl.controller("app",["$scope",function(scope){
+  mdl.controller("app",["$ajax", "$scope",function($ajax,scope){
+    
+    console.log($ajax);
     history_navigator(scope.$root);
+    scope.$root.ajax=$ajax;
     scope.$root.$history.change(function(data){
       if(data.page){
         scope.$root.page=data.page;
@@ -48,4 +51,4 @@
   }]);
 </script>
 </body>
-</html>
+</html>

@@ -1,7 +1,9 @@
 <script src="../controllers/pages.js" server></script>
 <script>
     (function(scope){
-        scope.ws=ajax().create("{(getCurrentUrl())}");
+        debugger;
+        scope.ws=scope.$root.ajax.with("{(getCurrentUrl())}");
+        console.log(scope.ws);
         console.log(scope);
     });
 </script>
