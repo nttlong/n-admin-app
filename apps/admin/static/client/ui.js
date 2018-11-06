@@ -847,9 +847,9 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
                 })
                 
                 var divRow=$("<div></div>");
-                divRow.hide();
+                // divRow.hide();
                 divRow.html(html);
-                divRow.appendTo(e[0]);
+                // divRow.appendTo(e[0]);
                 $compile(divRow.contents())(subScope);
                 var rows=divRow.children();
                 for(var x=0;x<rows.length;x++){
@@ -879,7 +879,7 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
                     var smTotal=0;
                     var lgTotal=0;
                     var xsTotal=0;
-                    // var eleRows=dvMain.children();
+                    
                     for(var i=0;i<eles.length;i++){
                         
                         if($($(eles[i]).children()[0]).attr("break")!== undefined){
@@ -1000,15 +1000,12 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
 
                         
                     }
-                    // var eles=dvMain.children();
-                    // for(var i=0;i<eles.length;i++){
-                    //     $(eles[i]).appendTo(divRow[0])
-                    // }
+                    
                 }
                 
                 
                 
-                divRow.show();
+                divRow.contents().appendTo(e[0])
 
                 s.$apply();
             }
