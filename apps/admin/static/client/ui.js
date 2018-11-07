@@ -852,9 +852,7 @@ function makeUpForm(divRow,a){
                     var smTotal=0;
                     var lgTotal=0;
                     var xsTotal=0;
-                    
                     for(var i=0;i<eles.length;i++){
-                        
                         if($($(eles[i]).children()[0]).attr("break")!== undefined){
                             console.log(lgTotal);
                             var _xs=12-xsTotal %12;
@@ -876,74 +874,56 @@ function makeUpForm(divRow,a){
                             smTotal=0;
                             lgTotal=0;
                             xsTotal=0;
-                                    
                         }
                         else {
                             var xsValue=xsCols[xsIndex]*1;
                             if($($(eles[i]).children()[0]).attr("xs-span")){
                                 var xsSpanValue=$($(eles[i]).children()[0]).attr("xs-span")*1;
-                            
                                 for(var j=1;j<xsSpanValue;j++){
                                     xsIndex++;
                                     if(xsIndex<xsCols.length){
                                         xsValue+=xsCols[xsIndex]*1;
                                     }
-                                    
                                 }
-                                
-                                
                             }
                             xsTotal+=xsValue;
                             $(eles[i]).addClass("col-xs-"+xsValue);
                             var smValue=smCols[mdIndex]*1;
                             if($($(eles[i]).children()[0]).attr("sm-span")){
                                 var smSpanValue=$($(eles[i]).children()[0]).attr("sm-span")*1;
-                                
                                 for(var j=1;j<smSpanValue;j++){
                                     smIndex++;
                                     if(smIndex<smCols.length){
                                         smValue+=smCols[smIndex]*1;
                                     }
-                                    
                                 }
-                                
-                                
                             }
                             smTotal+=smValue;
                             $(eles[i]).addClass("col-sm-"+smValue);
                             var mdValue=mdCols[mdIndex]*1;
                             if($($(eles[i]).children()[0]).attr("md-span")){
                                 var mdSpanValue=$($(eles[i]).children()[0]).attr("md-span")*1;
-                        
                                 for(var j=1;j<mdSpanValue;j++){
                                     mdIndex++;
                                     if(mdIndex<mdCols.length){
                                         mdValue+=mdCols[mdIndex]*1;
                                     }
-                                    
                                 }
-                                
-                                
                             }
                             mdTotal+=mdValue;
                             $(eles[i]).addClass("col-md-"+ mdValue);
                             var lgValue=lgCols[lgIndex]*1;
                             if($($(eles[i]).children()[0]).attr("lg-span")){
                                 var lgSpanValue=$($(eles[i]).children()[0]).attr("lg-span")*1;
-                            
                                 for(var j=1;j<lgSpanValue;j++){
                                     lgIndex++;
                                     if(lgIndex<lgCols.length){
                                         lgValue+=lgCols[lgIndex]*1;
                                     }
-                                    
                                 }
-                                
-                                
                             }
                             lgTotal+=lgValue;
                             $(eles[i]).addClass("col-lg-"+lgValue);
-                            
                             if(mdIndex+1<mdCols.length){
                                 mdIndex++;
                             }
@@ -968,12 +948,9 @@ function makeUpForm(divRow,a){
                             else {
                                 xsIndex=0;
                             }
-                        
                         }
 
-                        
                     }
-                    
                 }
                 return divRow;
 }
@@ -1122,6 +1099,9 @@ mdl.directive("select2",["$parse",function($parse){
         }
     }
 }]);
+/**
+ * <summernode [ng-model=...] [ng-change=...] [component-id=...]></sumnmernote>
+ */
 mdl.directive("summernote",["$parse",function($parse){
     function SummernoteInstance(ele){this.ele=ele;} ;
     SummernoteInstance.prototype.insertText=function(txt){
@@ -1198,4 +1178,27 @@ mdl.directive("summernote",["$parse",function($parse){
 
         }
     }
-}])
+}]);
+/**
+ * <input-mask [type={text|number|date|time}] mask='' [ng-model=..] [ng-change=...] ></input-mask>
+ */
+mdl.directive("inputMask",function(){
+    return {
+        restrict:"ECA",
+        template:"<input type='text'/>",
+        replace:true,
+        link:function(s,e,a){
+            var im = new Inputmask("99-9999999");
+            Inputmask.extendAliases({
+                'numeric': {
+                  autoUnmask: true,
+                  allowPlus: true,
+                  allowMinus: true
+                }
+              });
+              Inputmask("numeric").mask($(e[0])[0]);
+            //Inputmask("numeric").mask($(e[0])[0]);
+            
+        }
+    }
+});
