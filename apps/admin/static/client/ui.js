@@ -428,7 +428,7 @@ mdl.directive("qTemplate", ["$compile", function ($compile) {
                 if (scripts && (scripts.length > 0)) {
                     for (var i = 0; i < scripts.length; i++) {
                         try {
-                            //debugger;
+                        
                             var fn = Function("var ret=" + scripts[i] + ";return ret")();
                             fn(subScope);
                         }
@@ -780,7 +780,7 @@ mdl.directive("call",["$parse",function($parse){
         priority:2,
         scope:false,
         link:function(s,e,a){
-            
+         
             s.$watch(e.parent().attr("ws")||"$ws",function(o,v){
                 var scope=findScopeById(e.parent().attr("s-id")*1);
                 var ws=undefined;
@@ -819,39 +819,10 @@ mdl.directive("call",["$parse",function($parse){
         }
     }
 }])
-mdl.directive("formData",["$parse","$compile",function($parse,$compile){
-    return {
-        restrict:"ECA",
-        transclude:true,
-        template:"<div ng-transclude></div>",
-        replace:true,
-        link:function(s,e,a){
-         
-            
-            function watch(){
-                if(e.attr("data-template")){
-                    init(decodeURIComponent(e.attr("data-template")));
-                }
-                else {
-                    setTimeout(watch,10);
-                }    
-            }
-            function init(html){
-              
-                var subScope = s.$new();
-                subScope.data=s.$eval(a.source);
-                s.$watch(a.source,function(o,v){
-                    console.log(v);
-                    subScope._=o;
-                    subScope.$applyAsync();
-
-                })
-                
-                var divRow=$("<div></div>");
+function makeUpForm(divRow,a){
+   
                 // divRow.hide();
-                divRow.html(html);
-                // divRow.appendTo(e[0]);
-                $compile(divRow.contents())(subScope);
+               
                 var rows=divRow.children();
                 for(var x=0;x<rows.length;x++){
                     var eles=$(rows[x]).children();
@@ -942,7 +913,7 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
                             var mdValue=mdCols[mdIndex]*1;
                             if($($(eles[i]).children()[0]).attr("md-span")){
                                 var mdSpanValue=$($(eles[i]).children()[0]).attr("md-span")*1;
-                                debugger;
+                        
                                 for(var j=1;j<mdSpanValue;j++){
                                     mdIndex++;
                                     if(mdIndex<mdCols.length){
@@ -1003,8 +974,41 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
                     }
                     
                 }
-                
-                
+                return divRow;
+}
+
+mdl.directive("formData",["$parse","$compile",function($parse,$compile){
+    return {
+        restrict:"ECA",
+        transclude:true,
+        priority:0,
+        template:"<div ng-transclude></div>",
+        replace:true,
+        link:function(s,e,a){
+         
+          
+            function watch(){
+                if(e.attr("data-template")){
+                    init(decodeURIComponent(e.attr("data-template")));
+                }
+                else {
+                    setTimeout(watch,10);
+                }    
+            }
+            function init(html){
+              
+                var subScope = s.$new();
+                subScope.data=s.$eval(a.source);
+                s.$watch(a.source,function(o,v){
+                    console.log(v);
+                    subScope._=o;
+                    subScope.$applyAsync();
+
+                })
+                var divRow=$("<div></div>");
+                divRow.html(html);
+                $compile(divRow.contents())(subScope);
+                divRow=makeUpForm(divRow,a);
                 
                 divRow.contents().appendTo(e[0])
 
@@ -1017,9 +1021,73 @@ mdl.directive("formData",["$parse","$compile",function($parse,$compile){
 mdl.directive("formTemplate",[function(){
     return {
         restrict:"ECA",
-        link:function(s,e,a){
-            e.parent().attr("data-template",encodeURIComponent(e.html()));
-            e.remove();
+        compile: function(element, attributes){
+            var originHtml=element.html();
+            element.empty();
+            return {
+                pre: function(s, e, a, c, t){
+                   e.parent().attr("data-template",encodeURIComponent(originHtml));
+                    e.remove();
+                    
+                },
+                post: function(s, e, a, c, t){
+                   
+                }
+            }
         }
     }
-}])
+}]);
+mdl.directive("formLayout",["$parse","$compile",function($parse,$compile){
+    return {
+        restrict:"ECA",
+        template:"<div ng-transclude></div>",
+        transclude:true,
+        replace:true,
+        priority:0,
+        
+        link:function(s,e,a){
+            
+            function watch(){
+                if(e.attr("data-template")){
+                    init(decodeURIComponent(e.attr("data-template")));
+                }
+                else {
+                    setTimeout(watch,10);
+                }    
+            }
+            function init(html){
+                var divRow=$("<div></div>");
+                divRow.html(html);
+                $compile(divRow.contents())(s);
+                divRow=makeUpForm(divRow,a);
+                
+                divRow.contents().appendTo(e[0])
+
+                s.$apply();
+            }
+            watch();
+        }
+    }
+}]);
+mdl.directive("select2",[function(){
+    return {
+        restrict:"ECA",
+        template:"<select style=\"width:100%\"></select>",
+        replace:true,
+        priority:10000,
+        link:function(s,e,a){
+            var config={
+                data:s.$eval(a.source)||[]
+            }
+            $(e[0]).select2(config);
+            s.$watch(a.source,function(v,o){
+                if(o!==v){
+                    //$(e[0]).select2("destroy");
+                        config.data=v;
+                        $(e[0]).select2(config);
+                }
+            })
+            
+        }
+    }
+}]);

@@ -23,6 +23,9 @@ module.exports=function(context,req,res){
         {
           caption:"Language",
           page:"pages/resource.languages"
+        },{
+          caption:"Reports",
+          page:"pages/resource.Reports"
         }
       ]
     },{

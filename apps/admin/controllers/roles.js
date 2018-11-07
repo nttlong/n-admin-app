@@ -5,7 +5,7 @@ module.exports=(context,req,res)=>{
     return {
         ajax:{
             getItems:(data)=>{
-                debugger;
+               
                 var items=query(db,roleModels).project({
                     code:1,
                     name:1,
@@ -14,7 +14,7 @@ module.exports=(context,req,res)=>{
                     modifie_on:1,
                     modified_by:1
                 }).items();
-                debugger;
+               
                 return items;
             }
         }

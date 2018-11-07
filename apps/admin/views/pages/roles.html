@@ -1,9 +1,36 @@
 <script src="./../../controllers/roles.js" server></script>
 <div>
-    {{data}}
+    <form-layout>
+        <form-template>
+            <div class="row">
+                    <label class="form-label">test</label>
+                    <input type="text" class="form-control" ng-model="data.test">
+                    <label class="form-label">test</label>
+                    <select2 type="text" class="form-control" ng-model="data.test" data-source="myData"></select2>
+            </div>
+                
+        </form-template>
+        
+    </form-layout>
+    <form-layout>
+            <form-template>
+                <div class="row">
+                        <label class="form-label">test</label>
+                        <input type="text" class="form-control" ng-model="data.test">
+                </div>
+                    
+            </form-template>
+            
+        </form-layout>
 </div>
 <script>
 (function(scope){
+    scope.myData=[
+        {
+            id:"A",
+            text:"AAAA"
+        }
+    ]
     scope.getItems=function(){
         scope.ws.call("getItems").done(function(res){
             scope.data=res;
