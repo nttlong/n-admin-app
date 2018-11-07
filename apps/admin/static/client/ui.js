@@ -833,6 +833,7 @@ function makeUpForm(divRow,a){
                         $(eles[i]).appendTo(div[0]);
                         div.appendTo(tmpDiv[0]);
                     }
+                    $(rows[x]).addClass("row")
                     tmpDiv.contents().appendTo(rows[x]);
 
                 }
@@ -1069,7 +1070,7 @@ mdl.directive("formLayout",["$parse","$compile",function($parse,$compile){
         }
     }
 }]);
-mdl.directive("select2",[function(){
+mdl.directive("select2",["$parse",function($parse){
     return {
         restrict:"ECA",
         template:"<select style=\"width:100%\"></select>",
@@ -1077,17 +1078,124 @@ mdl.directive("select2",[function(){
         priority:10000,
         link:function(s,e,a){
             var config={
-                data:s.$eval(a.source)||[]
+                data:s.$eval(a.source)||[],
+                placeholder: a.placeholder,
+                allowClear: true
             }
-            $(e[0]).select2(config);
+            var isManulaChange=false;
+            var instance=$(e[0]).select2(config).data("select2");
+            instance.$element.on("select2:select",function(evt){
+                isManulaChange=true;
+                if(a.ngModel){
+                    $parse(a.ngModel).assign(s,$(evt.currentTarget).val());
+                }
+                if(a.ngChange){
+                    var fn=s.$eval(a.ngChange);
+                    if(angular.isFunction(fn)){
+                        fn(v);
+                    }
+                }
+                s.$applyAsync();
+                isManulaChange=false;
+            })
+            a.$observe("placeholder",function(v){
+                config.placeholder=v;
+                instance.$element.select2(config);
+            });
+            s.$watch(a.ngModel,function(v,o){
+                if(isManulaChange) return;
+                if(v!=o){
+                    instance.val(v).trigger("change");
+                    
+                }
+            });
             s.$watch(a.source,function(v,o){
                 if(o!==v){
                     //$(e[0]).select2("destroy");
                         config.data=v;
-                        $(e[0]).select2(config);
+                        instance.$element.select2(config);
+                        //instance=$(e[0]).select2(config).data("select2");
+                        //instance.setData(v);
                 }
             })
             
         }
     }
 }]);
+mdl.directive("summernote",["$parse",function($parse){
+    function SummernoteInstance(ele){this.ele=ele;} ;
+    SummernoteInstance.prototype.insertText=function(txt){
+        $(this.ele[0]).summernote('insertText', txt);
+        return this;
+    }
+    SummernoteInstance.prototype.createRange=function(){
+        $(this.ele[0]).summernote('createRange');
+        return this;
+    }
+    SummernoteInstance.prototype.enable=function(val){
+        if(!val) {
+            $(this.ele).summernote('disable');
+        }
+        else {
+            $(this.ele).summernote('enable');
+        }
+        return this;
+    }
+    SummernoteInstance.prototype.insertImage=function(url,fileName){
+        $(this.ele).summernote('insertImage', url, filename);
+        return this;
+    }
+    
+    return {
+        restrict:"ECA",
+        template:"<div><textarea></textarea></div>",
+        replace:true,
+        link:function(s,ele,a){
+            var e=ele.find("textarea");
+            var isManualChange=false;
+            var isChangeByBinding=false;
+           var instance=new SummernoteInstance(e[0]);
+           if(a.componentId){
+             $parse(a.componentId).assign(s,instance);
+           } 
+           $(e[0]).summernote();
+           $(e[0]).summernote("code",s.$eval(a.ngModel)||"");
+           $(e[0]).on('summernote.focus', function() {
+              isManualChange=true;
+           });
+           $(e[0]).on('summernote.blur', function() {
+             isManualChange=false;
+           });
+           $(e[0]).on('summernote.change', function(we, contents, $editable) {
+               if(isChangeByBinding) return;
+               if(a.ngModel){
+                   var txt=contents;
+                   $parse(a.ngModel).assign(s,contents);
+               }
+               if(a.ngChange){
+                   var fn=s.$eval(a.ngChange);
+                   if(angular.isFunction(fn)){
+                       fn(txt);
+                   }
+
+               }
+               s.$applyAsync(function(){
+                 
+               });
+               
+           });
+          
+           s.$watch(a.ngModel,function(v,o){
+               if(isManualChange) return;
+               if(v!==o){
+                isChangeByBinding=true;
+                 $(e[0]).summernote("code",v||"");
+                 isChangeByBinding=false;
+               }
+           })
+           
+
+
+        }
+    }
+}])

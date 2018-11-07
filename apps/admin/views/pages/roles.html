@@ -2,13 +2,17 @@
 <div>
     <form-layout>
         <form-template>
-            <div class="row">
+            <div>
                     <label class="form-label">test</label>
                     <input type="text" class="form-control" ng-model="data.test">
                     <label class="form-label">test</label>
-                    <select2 type="text" class="form-control" ng-model="data.test" data-source="myData"></select2>
+                    <select2 type="text" class="form-control" ng-model="data.test" data-source="myData" placeholder="test dasdasd"></select2>
+                   
             </div>
-                
+                <div>
+                        <label class="form-label">test</label>
+                        <summernote ng-model="myHtml" lg-span="2"></summernote>
+                </div>
         </form-template>
         
     </form-layout>
@@ -22,15 +26,23 @@
             </form-template>
             
         </form-layout>
+        <input type="button" value="test" ng-click="doTest()"/>
+        {{myHtml}}
 </div>
 <script>
 (function(scope){
+    scope.myHtml="dasdasdasdasdasdasd dasd";
     scope.myData=[
         {
             id:"A",
             text:"AAAA"
         }
-    ]
+    ];
+    scope.doTest=function(){
+        debugger;
+        scope.myHtml="dasdasdasdasdasdasd dasd vvvvvvvvvvvvvvvvvvvvvvvv" ;
+        scope.$applyAsync();
+    }
     scope.getItems=function(){
         scope.ws.call("getItems").done(function(res){
             scope.data=res;
