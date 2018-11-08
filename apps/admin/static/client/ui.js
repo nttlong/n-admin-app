@@ -44,16 +44,19 @@ function addCss(paths){
       });
     });
 }
-function addScripts(paths){
+function addScripts(paths,done){
     function runScript(index){
         if(index>=paths.length){
+            if(done){
+                done();
+            }
             return;
         }
         else {
             $.getScript(___rootDir__+paths[index],
                 function(data, textStatus, jqxhr ){
                     runScript(index+1);
-                    
+                    console.log(___rootDir__+paths[index])
                 }
               );
         }
@@ -417,7 +420,6 @@ window.___bootstrapUI___ = angular.module("q-ui", []);
 
 
 loadScripts([
-
     "ui.directtives/ui.bootstrap.layout.js",
     "ui.directtives/ui.bootstrap.image.js",
     "ui.directtives/ui.bootstrap.select2.js",
@@ -426,7 +428,9 @@ loadScripts([
     "ui.directtives/ui.services.dialog.js",
     "ui.directtives/ui.drectives.ajax.js",
     "ui.directtives/ui.directitive.ajax.call.js",
-    "ui.directtives/ui.directives.inputMask.js"
+    "ui.directtives/ui.directives.inputMask.js",
+    "ui.directtives/ui.directives.ag-grid.js",
+    "ui.directtives/ui.directives.handsontable.js"
 
 ]);
 

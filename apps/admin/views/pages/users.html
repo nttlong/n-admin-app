@@ -1,58 +1,34 @@
 <script src="../../controllers/users.js" server></script>
 <div>
-    <style>
-        .form-element{
-            margin-top:4px;
-        }
-    </style>
-    <div form-data source="X" data-md-cols="2,10" data-sm-cols="2,10" data-lg-cols="1,11" data-xs="2,10" class="container">
-       
-        <div form-template>
-            <label>
-                Name
-            </label>
-            <input type="text" ng-model="_.name" class="form-control">
-            <label>
-                    Name
-                </label>
-                <input type="text" ng-model="_.name" class="form-control">
-                <label>
-                        Name
-                    </label>
-                    <input type="text" ng-model="_.name" class="form-control">
-        </div>
-    </div>
-    {{X}}
-<ajax url="{(getCurrentUrl())}" ws="myAjax">
-    <call data-id="getItems" ng-model="data" data-function="getItems"></call>
-</ajax>
-</div>
-<script>
-    (function(scope){
-        scope.X={
-            name:"122313"
-        }
-        scope.doTest=function(){
-            alert("OK");
-        }
-        scope.getItems();
-
-        // scope.getUser={
-        //     name:1
-        // }
-        // scope.getItems=function(){
+  
+        <div b-ag-grid  
+        id="agGrid" 
+        on-load-data="doLoadData" 
+        data-allow-edit="false" 
+        data-show-selected-column="true"
+        data-on-before-edit="showBeforeEdit"
+        data-selected-row="selectedRow"
+        data-on-edit="doEditWithRow(myRow)"
+        data-on-insert="doInsert()"
+        data-on-delete="doDelete(myRow)"
+        data-msg-delete="Do you want to delete this row?"
+        data-row="myRow"
+        data-dialog-ok-caption="OK"
+        data-dialog-cancel-caption="Cancel"
+        data-dialog-message-content ="Do you want to delete"
+        data-dialog-caption="Confirm message"
+        style="height:400px"
+    
+        >
+        <columns>
             
-        //     scope.ws.callAll({id:"getItems",done:function(res){
-        //         scope.data=res;
-        //         scope.$applyAsync();
-        //     }},{
-        //         id:"getItems",
-        //         done:function(res){
-        //             scope.data=res;
-        //             scope.$applyAsync();
-        //         }
-        //     });
-        // }
-        //scope.getItems();
-    })
-</script>
+            <column data-field='code' data-width='200' title="{(getAppRes('Code'))}" data-pinned="left"></column>
+            <column data-field='name' title="{(getAppRes('Name'))}"></column>
+            <column data-field='description' title="{(getAppRes('Description'))}"></column>
+            <column data-field='created_on' title="{(getAppRes('Created on'))}" data-width="100" data-type='date'></column>
+            <column data-field='created_by' title="{(getAppRes('Created by'))}" data-width="200"></column>
+        </columns>
+        </div>  
+
+
+</div>
