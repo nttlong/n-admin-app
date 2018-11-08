@@ -1,3 +1,9 @@
+addCss([
+    "/../vendors/select2/css/select2.min.css"
+])
+addScripts([
+    "/../vendors/select2/js/select2.full.min.js"
+])
 angularDefine(function(mdl){
     debugger;
     mdl.directive("select2",["$parse",function($parse){
