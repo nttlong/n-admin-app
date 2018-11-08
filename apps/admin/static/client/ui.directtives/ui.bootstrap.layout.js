@@ -11,6 +11,26 @@ function makeUpForm(divRow,a){
         for(var i=0;i<eles.length;i++){
             var div=$("<div class='form-element'></div>");
             var ele=$(eles[i]);
+            debugger;
+            if((ele[0].tagName==="LABEL")||
+            ((ele[0].tagName==="SPAN"))){
+                ele.addClass("control-label");
+            }
+            if((ele[0].tagName==="INPUT")&&
+            (((ele[0].type==="text")||
+              (ele[0].type==="number")||
+              (ele[0].type==="select")||
+              (ele[0].type==="email")||
+              (ele[0].type==="password")
+            ))){
+                ele.addClass("form-control");
+            }
+            if((ele[0].tagName==="INPUT")&&
+            (((ele[0].type==="button")||
+              (ele[0].type==="submit")
+            ))){
+                ele.addClass("btn");
+            }
             if(ele.attr("span")){
                 if(!ele.attr("xs-span")){
                     ele.attr("xs-span",ele.attr("span"))

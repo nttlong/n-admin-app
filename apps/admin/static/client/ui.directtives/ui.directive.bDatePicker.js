@@ -10,7 +10,7 @@ angularDefine(function (mdl) {
         restrict: "CEA",
         replace: true,
         template: function(){
-            if(libs_directives.isSmallSize){
+            if(mdl.isSmallSize){
                 return "<div class='input-group-sm input-group'><input type='text' class='form-control'/><span class=\"input-group-sm  input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></div>";
             }
             else {

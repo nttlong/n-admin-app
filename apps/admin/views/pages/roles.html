@@ -6,33 +6,20 @@
                     <label class="form-label">test</label>
                     <input type="text" class="form-control" ng-model="data.test">
                     <label class="form-label">test</label>
-                    <select2 type="text" class="form-control" ng-model="data.test" data-source="myData" placeholder="test dasdasd"></select2>
-                    
-                   
+                    <select2 type="text" class="form-control" ng-model="data.test" data-source="myData" placeholder="test dasdasd" span="12"></select2>
             </div>
                 <div>
-                        <label class="form-label">test</label>
-                        <summernote ng-model="myHtml" lg-span="2"></summernote>
+                        <label>test</label>
+                        <summernote ng-model="myHtml" lg-span="12"></summernote>
                 </div>
                 <div>
-                        <label class="form-label">number</label>
+                        <label>number</label>
                         <input-mask type="text"  placeholder="test dasdasd"/>
                 </div>
         </form-template>
         
     </form-layout>
-    <form-layout>
-            <form-template>
-                <div class="row">
-                        <label class="form-label">test</label>
-                        <input type="text" class="form-control" ng-model="data.test">
-                </div>
-                    
-            </form-template>
-            
-        </form-layout>
-        <input type="button" value="test" ng-click="doTest()"/>
-        {{myHtml}}
+  
 </div>
 <script>
 (function(scope){
