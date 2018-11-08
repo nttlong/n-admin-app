@@ -10,6 +10,21 @@ function makeUpForm(divRow,a){
 
         for(var i=0;i<eles.length;i++){
             var div=$("<div class='form-element'></div>");
+            var ele=$(eles[i]);
+            if(ele.attr("span")){
+                if(!ele.attr("xs-span")){
+                    ele.attr("xs-span",ele.attr("span"))
+                }
+                if(!ele.attr("sm-span")){
+                    ele.attr("sm-span",ele.attr("span"))
+                }
+                if(!ele.attr("md-span")){
+                    ele.attr("md-span",ele.attr("span"))
+                }
+                if(!ele.attr("lg-span")){
+                    ele.attr("lg-span",ele.attr("span"))
+                }
+            }
             $(eles[i]).appendTo(div[0]);
             div.appendTo(tmpDiv[0]);
         }
@@ -94,6 +109,7 @@ function makeUpForm(divRow,a){
                 $(eles[i]).addClass("col-md-"+ mdValue);
                 var lgValue=lgCols[lgIndex]*1;
                 if($($(eles[i]).children()[0]).attr("lg-span")){
+                    debugger;
                     var lgSpanValue=$($(eles[i]).children()[0]).attr("lg-span")*1;
                     for(var j=1;j<lgSpanValue;j++){
                         lgIndex++;
@@ -148,6 +164,7 @@ angularDefine(function(mdl){
     function watch(){
         if(e.attr("data-template")){
             init(decodeURIComponent(e.attr("data-template")));
+            e.removeAttr("data-template");
         }
         else {
             setTimeout(watch,10);
@@ -178,53 +195,54 @@ angularDefine(function(mdl){
     }]);
     mdl.directive("formTemplate",[function(){
     return {
-    restrict:"ECA",
-    compile: function(element, attributes){
-    var originHtml=element.html();
-    element.empty();
-    return {
-        pre: function(s, e, a, c, t){
-        e.parent().attr("data-template",encodeURIComponent(originHtml));
-            e.remove();
-            
-        },
-        post: function(s, e, a, c, t){
-        
+        restrict:"ECA",
+        compile: function(element, attributes){
+            var originHtml=element.html();
+            element.empty();
+            return {
+                pre: function(s, e, a, c, t){
+                e.parent().attr("data-template",encodeURIComponent(originHtml));
+                    e.remove();
+                    
+                },
+                post: function(s, e, a, c, t){
+                
+                }
+            }
+         }
         }
-    }
-    }
-    }
     }]);
     mdl.directive("formLayout",["$parse","$compile",function($parse,$compile){
-    return {
-    restrict:"ECA",
-    template:"<div ng-transclude></div>",
-    transclude:true,
-    replace:true,
-    priority:0,
+        return {
+            restrict:"ECA",
+            template:"<div ng-transclude></div>",
+            transclude:true,
+            replace:true,
+            priority:0,
 
-    link:function(s,e,a){
+            link:function(s,e,a){
 
-    function watch(){
-        if(e.attr("data-template")){
-            init(decodeURIComponent(e.attr("data-template")));
+            function watch(){
+                if(e.attr("data-template")){
+                    init(decodeURIComponent(e.attr("data-template")));
+                    e.removeAttr("data-template");
+                }
+                else {
+                    setTimeout(watch,10);
+                }    
+            }
+            function init(html){
+                var divRow=$("<div></div>");
+                divRow.html(html);
+                $compile(divRow.contents())(s);
+                divRow=makeUpForm(divRow,a);
+                
+                divRow.contents().appendTo(e[0])
+
+                s.$apply();
+            }
+            watch();
+            }
         }
-        else {
-            setTimeout(watch,10);
-        }    
-    }
-    function init(html){
-        var divRow=$("<div></div>");
-        divRow.html(html);
-        $compile(divRow.contents())(s);
-        divRow=makeUpForm(divRow,a);
-        
-        divRow.contents().appendTo(e[0])
-
-        s.$apply();
-    }
-    watch();
-    }
-    }
 }]);
 });

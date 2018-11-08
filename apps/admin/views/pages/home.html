@@ -1,30 +1,24 @@
 <div>
-        <div b-ag-grid  
-        id="agGrid" 
-        on-load-data="doLoadData" 
-        data-allow-edit="false" 
-        data-show-selected-column="true"
-        data-on-before-edit="showBeforeEdit"
-        data-selected-row="selectedRow"
-        data-on-edit="doEditWithRow(myRow)"
-        data-on-insert="doInsert()"
-        data-on-delete="doDelete(myRow)"
-        data-msg-delete="Do you want to delete this row?"
-        data-row="myRow"
-        data-dialog-ok-caption="OK"
-        data-dialog-cancel-caption="Cancel"
-        data-dialog-message-content ="Do you want to delete"
-        data-dialog-caption="Confirm message"
-        style="height:400px"
-
-        >
-        <columns>
-            
-            <column data-field='code' data-width='200' title="{(getAppRes('Code'))}" data-pinned="left"></column>
-            <column data-field='name' title="{(getAppRes('Name'))}"></column>
-            <column data-field='description' title="{(getAppRes('Description'))}"></column>
-            <column data-field='created_on' title="{(getAppRes('Created on'))}" data-width="100" data-type='date'></column>
-            <column data-field='created_by' title="{(getAppRes('Created by'))}" data-width="200"></column>
-        </columns>
-    </div>
+       <style>
+           .form-element {
+               padding-bottom:4px;
+           }
+       </style>
+    <form-layout md-cols="2,4,2,4" xs-cols="4,8" lg-cols="1,3,1,3,1,3" >
+        <form-template>
+            <div>
+                    <label>
+                            aaa
+                    </label>
+                    <input type="text" class="form-control"/>
+                    <label>
+                            aaa
+                    </label>
+                    <input type="text" class="form-control" md-span="3" lg-span="3"/>
+            </div>
+            <div>
+            <summernote span="12"></summernote>
+            </div>
+        </form-template>
+    </form-layout>
 </div>
