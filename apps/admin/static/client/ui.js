@@ -430,7 +430,13 @@ loadScripts([
     "ui.directtives/ui.directitive.ajax.call.js",
     "ui.directtives/ui.directives.inputMask.js",
     "ui.directtives/ui.directives.ag-grid.js",
-    "ui.directtives/ui.directives.handsontable.js"
+    "ui.directtives/ui.directives.handsontable.js",
+    "ui.directtives/ui.diective.bLookupBox.js",
+    "ui.directtives/ui.diective.bPager.js",
+    "ui.directtives/ui.directives.bSelect.js",
+    "ui.directtives/ui.directive.bDatePicker.js"
+
+
 
 ]);
 
