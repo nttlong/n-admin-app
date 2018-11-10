@@ -27,12 +27,7 @@
         </columns>
     </div>
 */
-addScripts([
-    "vendors/ag-grids/ag-grid.min.js"
-]);
-addCss([
-    "./../vendors/ag-grids/"
-])
+
 var ag_grid_msg_delete_dialog ='<div class="modal" tabindex="-1" role="dialog">'+
   '<div class="modal-dialog" role="document">'+
    ' <div class="modal-content">'+

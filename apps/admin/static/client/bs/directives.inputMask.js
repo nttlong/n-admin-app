@@ -1,10 +1,4 @@
-addScripts([
-    "/../vendors/inputmask/min/inputmask/inputmask.min.js",
-    "/../vendors/inputmask/min/inputmask/inputmask.date.extensions.min.js",
-    "/../vendors/inputmask/min/inputmask/inputmask.numeric.extensions.min.js",
-    "/../vendors/inputmask/min/inputmask/inputmask.phone.extensions.min.js",
-    "/../vendors/inputmask/min/inputmask/inputmask.regex.extensions.min.js",
-])
+
 angularDefine(function(mdl){
     /**
  * <input-mask [type={text|number|date|time}] mask='' [ng-model=..] [ng-change=...] ></input-mask>

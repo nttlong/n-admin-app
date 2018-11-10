@@ -1,11 +1,4 @@
-addCss([
-    "/../vendors/handsontable/handsontable.full.min.css"
-])
-addScripts([
-    "/../vendors/handsontable/handsontable.full.min.js"
-],function(){
-    
-})
+
 angularDefine(function(mdl){
     mdl.directive("handsOnTable",[function(){
         return {

@@ -35,12 +35,12 @@
   
   mdl.controller("app",["$ajax", "$scope",function($ajax,scope){
     debugger;
-    alert(scope.$id);
+    
     console.log($ajax);
     history_navigator(scope.$root);
     scope.$root.ajax=$ajax;
     scope.$root.$history.change(function(data){
-      alert(data.page);
+     
       if(data.page){
         scope.$root.page=data.page;
       }

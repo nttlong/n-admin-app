@@ -1,10 +1,4 @@
 
-addCss([
-    "/../vendors/summernote/summernote.css"
-])
-addScripts([
-    "/../vendors/summernote/summernote-bs4.min.js"
-]);
 
 angularDefine(function(mdl){
     /**
