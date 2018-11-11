@@ -2,9 +2,13 @@ var mUtils=require("n-qr");
 var modelName = "sys.business_info"
 mUtils.model(modelName,[
     
-],[
-  
 ],{
+    properties:{
+        site:{
+            bsonType:mUtils.BSONTypes.Object,
+            
+        }
+    }
    
     site:mUtils.embeded(mUtils.FieldTypes.Object,[
         "title", "key_words", "name", "mobile", "address","email"

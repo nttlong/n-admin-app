@@ -3,34 +3,49 @@ var modelName="sys.apps";
 dbUtil.model(modelName,[
     {
         fields:{code:1},
-        options:dbUtil.IndexTypes.unique
+        options:{
+            unique:true
+        }
     }
-],[
-    "code",
-    "created_on",
-    "created_by"
-    
 ],{
-        code:dbUtil.FieldTypes.String,
-        name:dbUtil.FieldTypes.String,
-        description:dbUtil.FieldTypes.String,
-        views:dbUtil.embeded(
-            dbUtil.FieldTypes.Array,
-            ["code", "name", "created_on","created_by"],
-            {
-                code:dbUtil.FieldTypes.String,
-                name:dbUtil.FieldTypes.String,
-                description:dbUtil.FieldTypes.String,
-                created_on: dbUtil.FieldTypes.Date,
-                created_by: dbUtil.FieldTypes.String,
-                modified_on: dbUtil.FieldTypes.Date,
-                modified_by: dbUtil.FieldTypes.String
-            }
-        ),
-        created_on:dbUtil.FieldTypes.Date,
-        created_by:dbUtil.FieldTypes.String,
-        modified_on: dbUtil.FieldTypes.Date,
-        modified_by: dbUtil.FieldTypes.String
+        required: [
+            "code",
+            "created_on",
+            "created_by"
 
-});
+        ],
+        properties:{
+            code: { bsonType: dbUtil.BSONTypes.String},
+            name: { bsonType: dbUtil.BSONTypes.String},
+            description: { bsonType: dbUtil.BSONTypes.String},
+                views: {
+                    bsonType:dbUtil.BSONTypes.Array,
+                    items:{
+                        required:[
+                            "code",
+                            "name",
+                            "created_on",
+                            "created_by"
+                        ],
+                        properties:{
+                            code:{bsonType:dbUtil.BSONTypes.String},
+                            name:{bsonType:dbUtil.BSONTypes.String},
+                            description:{bsonType:dbUtil.BSONTypes.String},
+                            created_by:{bsonType:dbUtil.BSONTypes.String},
+                            created_on:{bsonType:dbUtil.BSONTypes.Date},
+                            modified_by:{bsonType:dbUtil.BSONTypes.String},
+                            modified_on:{bsonType:dbUtil.BSONTypes.Date}
+                        }
+
+                    }
+                },
+            created_by: { bsonType: dbUtil.BSONTypes.String},
+                created_on:{bsonType:dbUtil.BSONTypes.Date},
+            modified_by: { bsonType: dbUtil.BSONTypes.String},
+                modified_on:{bsonType:dbUtil.BSONTypes.Date}
+                
+                
+        }
+        
+    });
 module.exports=modelName;

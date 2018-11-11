@@ -2,36 +2,47 @@ var qr=require("n-qr")
 var name="sys.auth_users";
 qr.model(name,[
     {
-        fields:["username"],
-        options:qr.IndexTypes.unique
+        fields:{username:1},
+        options:{
+            unique:true
+        }
     },{
-        fields:["email"],
-        options:qr.IndexTypes.unique
-    
+        fields:{email:1},
+        options:{
+            unique:true
+        }
     }
-    
-],[
-    "username",
-    "email",
-    "hash_password",
-    "created_on",
-    "created_by"
-
 ],{
-    username:qr.FieldTypes.String,
-    email:qr.FieldTypes.String,
-    hash_password:qr.FieldTypes.String,
-    description:qr.FieldTypes.String,
-    created_on:qr.FieldTypes.Date,
-    created_by:qr.FieldTypes.String,
-    sign_in:qr.embeded(qr.FieldTypes.Array,[
-        "time",
-        "session_id"
-    ],{
-        time:qr.FieldTypes.Date,
-        session_id:qr.FieldTypes.String
-    }),
+    required:[
+        "username",
+        "email",
+        "hash_password",
+        "created_on",
+        "created_by"
+    ],
+    properties:{
+        username:{bsonType:qr.BSONTypes.String},
+        email:{bsonType:qr.BSONTypes.String},
+        hash_password:{bsonType:qr.BSONTypes.String},
+        description:{bsonType:qr.BSONTypes.String},
+        created_by:{bsonType:qr.BSONTypes.String},
+        created_on:{bsonType:qr.BSONTypes.Date},
+        sign_in:{
+            bsonType:qr.BSONTypes.Array,
+            required:["time","session_id"],
+            properties:{
+                time:{bsonType:qr.BSONTypes.Date},
+                session_id:{bsonType:qr.BSONTypes.String}
+            }
+        },
+        change_password_on:{
+            bsonType:qr.BSONTypes.Array,
+            items:{
+                bsonType:qr.BSONTypes.Date
+            }
+        }
+    }
+});
     
-    change_password_on:qr.embeded(qr.FieldTypes.Array,[],qr.FieldTypes.Date)
-})
+ 
 module.exports=name;
